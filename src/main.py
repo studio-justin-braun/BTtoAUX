@@ -12,7 +12,6 @@ class BTtoAUXApp(tk.Tk):
         self.title("BTtoAUX")
         self.geometry(f"{self.WIDTH}x{self.HEIGHT}")
         self.configure(bg="#222222")
-        self.create_widgets()
         # Placeholder state variables
         self.connected_device = tk.StringVar(value="No device")
         self.track_title = tk.StringVar(value="-")
@@ -20,6 +19,8 @@ class BTtoAUXApp(tk.Tk):
         self.track_progress = tk.DoubleVar(value=0.0)
         self.track_length = tk.StringVar(value="0:00")
         self.pin_request = tk.StringVar(value="")
+
+        self.create_widgets()
 
     def create_widgets(self):
         # Connection status
