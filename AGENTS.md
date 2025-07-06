@@ -8,6 +8,8 @@ This repository contains the BTtoAUX project. It provides a simple GUI written i
 - Use Python 3.7+ compatible syntax.
 - Use PEP8 style where possible.
 - When modifying or adding scripts, update this `AGENTS.md` file accordingly.
+  The project root contains helper shell scripts such as `install.sh`,
+  `update.sh` and `setup_bt_sink.sh`.
 - Always run `flake8` and `python -m py_compile` on any added Python files when possible.
 
 ## Programmatic Checks
