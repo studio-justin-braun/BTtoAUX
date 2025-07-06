@@ -39,6 +39,19 @@ Use `update.sh` to check for and download newer versions from GitHub:
 bash update.sh
 ```
 
+### Bluetooth Audio Sink Setup
+
+To stream audio from a smartphone via Bluetooth and output it on the Pi's
+3.5&nbsp;mm jack, run:
+
+```bash
+bash setup_bt_sink.sh
+```
+
+The script installs required packages, starts PulseAudio and makes the Pi
+discoverable. After pairing your phone, any audio will be played through the
+AUX port.
+
 ## Disclaimer
 
 This project currently provides a basic GUI. Integration with Bluetooth audio and system services requires additional setup that is not included here.
