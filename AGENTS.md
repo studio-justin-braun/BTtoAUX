@@ -1,6 +1,6 @@
 # AGENT Instructions
 
-This repository contains the BTtoAUX project. It provides a simple GUI written in Python (`src/main.py`) that is intended to run on a Raspberry Pi 4 with a 320x480 touch screen. The GUI shows track information and basic playback controls. Bluetooth integration is **not** fully implemented yet; the current code only provides placeholders.
+This repository contains the BTtoAUX project. It provides a simple GUI written in Python (`src/main.py`) that is intended to run on a Raspberry Pi 4 with a 320x480 touch screen. The GUI shows track information and basic playback controls. Bluetooth integration uses simple `bluetoothctl` commands to enable discoverability and detect a connected device, but functionality is still limited.
 
 ## Coding Guidelines
 
