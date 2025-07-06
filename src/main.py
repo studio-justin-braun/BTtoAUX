@@ -1,3 +1,6 @@
+import subprocess
+import threading
+import time
 import tkinter as tk
 from tkinter import ttk
 
@@ -21,6 +24,8 @@ class BTtoAUXApp(tk.Tk):
         self.pin_request = tk.StringVar(value="")
 
         self.create_widgets()
+        self.setup_bluetooth()
+        threading.Thread(target=self.monitor_bluetooth, daemon=True).start()
 
     def create_widgets(self):
         # Connection status
@@ -109,6 +114,44 @@ class BTtoAUXApp(tk.Tk):
         self.pin_label.pack(side="left")
         self.pin_entry.pack(side="left")
         self.pin_button.pack(side="left")
+
+    def setup_bluetooth(self):
+        """Enable Bluetooth discoverability on startup."""
+        commands = [
+            ("bluetoothctl", "power", "on"),
+            ("bluetoothctl", "pairable", "on"),
+            ("bluetoothctl", "discoverable", "on"),
+        ]
+        for cmd in commands:
+            try:
+                subprocess.run(cmd, check=False, stdout=subprocess.DEVNULL,
+                               stderr=subprocess.DEVNULL)
+            except FileNotFoundError:
+                # bluetoothctl not available; ignore errors
+                pass
+
+    def monitor_bluetooth(self):
+        """Continuously update connection status."""
+        while True:
+            device = self._get_connected_device()
+            self.connected_device.set(device or "No device")
+            time.sleep(5)
+
+    def _get_connected_device(self):
+        """Return the name of the connected Bluetooth device if any."""
+        try:
+            output = subprocess.check_output(
+                "bluetoothctl info", shell=True, stderr=subprocess.DEVNULL
+            ).decode()
+            if "Connected: yes" in output:
+                for line in output.splitlines():
+                    if line.strip().startswith("Name:"):
+                        return line.split(":", 1)[1].strip()
+                    if line.strip().startswith("Alias:"):
+                        return line.split("Alias:", 1)[-1].strip()
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            pass
+        return None
 
     def show_pin_request(self, pin):
         self.pin_request.set(pin)
